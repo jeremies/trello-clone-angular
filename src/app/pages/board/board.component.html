@@ -1,3 +1,8 @@
 <p>board works! {{ board.name }}</p>
 
-<p *ngFor="let list of lists">{{ list.name }}</p>
+<div class="flex">
+  <app-board-dnd-list
+    *ngFor="let list of lists"
+    [list]="list"
+  ></app-board-dnd-list>
+</div>

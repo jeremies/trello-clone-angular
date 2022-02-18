@@ -7,6 +7,7 @@ import { BoardComponent } from './pages/board/board.component';
 import { BoardListComponent } from './pages/board-list/board-list.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BoardDndListComponent } from './components/board-dnd-list/board-dnd-list.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
     BoardComponent,
     BoardListComponent,
     HeaderComponent,
+    BoardDndListComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
