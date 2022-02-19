@@ -3,6 +3,7 @@
 
   <div
     cdkDropList
+    [id]="list.id"
     [cdkDropListData]="cards"
     (cdkDropListDropped)="drop($event)"
   >
