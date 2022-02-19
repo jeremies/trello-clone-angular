@@ -1,6 +1,6 @@
 <p>board works! {{ board.name }}</p>
 
-<div class="flex">
+<div class="flex" cdkDropListGroup>
   <app-board-dnd-list
     *ngFor="let list of lists"
     [list]="list"

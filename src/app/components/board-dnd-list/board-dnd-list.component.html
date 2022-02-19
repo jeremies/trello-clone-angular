@@ -1,5 +1,13 @@
 <div class="mr-2 border rounded-md">
   <h1>{{ list.name }}</h1>
 
-  <p class="border" *ngFor="let card of cards">{{ card.name }}</p>
+  <div
+    cdkDropList
+    [cdkDropListData]="cards"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <p class="border" *ngFor="let card of cards" cdkDrag [cdkDragData]="card">
+      {{ card.name }}
+    </p>
+  </div>
 </div>

@@ -33,4 +33,16 @@ export class LocalBoardService {
   getCards() {
     return this.cards.slice();
   }
+
+  getListCards(idList: string) {
+    return this.getCards()
+      .filter((card) => card.idList === idList)
+      .sort((a, b) => (a.pos > b.pos ? 1 : b.pos > a.pos ? -1 : 0));
+  }
+
+  updateCard(newCard: Card) {
+    const index = this.cards.findIndex((card) => card.id === newCard.id);
+    this.cards[index] = { ...newCard };
+    this.cardsChanged.next(this.cards.slice());
+  }
 }

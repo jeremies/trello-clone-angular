@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Card } from 'src/app/models/card.model';
@@ -21,16 +22,40 @@ export class BoardDndListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.localBoardService.cardsChanged.subscribe(
       (cards: Card[]) => {
-        this.cards = cards.filter((card) => card.idList === this.list.id);
+        this.cards = this.localBoardService.getListCards(this.list.id);
       }
     );
 
-    this.cards = this.localBoardService
-      .getCards()
-      .filter((card) => card.idList === this.list.id);
+    this.cards = this.localBoardService.getListCards(this.list.id);
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  drop(event: CdkDragDrop<Card[]>) {
+    const newCard: Card = { ...event.item.data };
+    if (event.previousContainer === event.container) {
+      if (event.currentIndex === event.previousIndex) {
+        return;
+      }
+      if (this.cards.length - 1 === event.currentIndex) {
+        newCard.pos = this.cards[this.cards.length - 1].pos + 65536;
+      } else if (event.currentIndex === 0) {
+        newCard.pos = this.cards[0].pos / 2;
+      } else if (event.currentIndex > event.previousIndex) {
+        newCard.pos =
+          (this.cards[event.currentIndex].pos +
+            this.cards[event.currentIndex + 1].pos) /
+          2;
+      } else {
+        newCard.pos =
+          (this.cards[event.currentIndex - 1].pos +
+            this.cards[event.currentIndex].pos) /
+          2;
+      }
+
+      this.localBoardService.updateCard(newCard);
+    }
   }
 }
