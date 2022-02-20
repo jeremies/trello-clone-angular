@@ -25,4 +25,8 @@ export class CardsService {
   update(card: Card): Observable<Card> {
     return this.apiService.put(`/cards/${card.id}`, card);
   }
+
+  create(card: Card): Observable<Card> {
+    return this.apiService.post('/cards', card);
+  }
 }

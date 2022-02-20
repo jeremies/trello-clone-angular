@@ -1,5 +1,5 @@
 <div
-  class="mr-2 border rounded-md"
+  class="mr-2 border rounded-md bg-gray-200 p-2 w-60"
   cdkDropList
   [id]="list.id"
   [cdkDropListData]="cards"
@@ -7,7 +7,14 @@
 >
   <h1>{{ list.name }}</h1>
 
-  <p class="border" *ngFor="let card of cards" cdkDrag [cdkDragData]="card">
+  <p
+    class="bg-white my-2"
+    *ngFor="let card of cards"
+    cdkDrag
+    [cdkDragData]="card"
+  >
     {{ card.name }}
   </p>
+
+  <app-add-card [idList]="list.id"></app-add-card>
 </div>

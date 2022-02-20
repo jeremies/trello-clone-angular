@@ -47,4 +47,10 @@ export class LocalBoardService {
     this.cardsChanged.next(this.cards.slice());
     this.cardsService.update(newCard).subscribe();
   }
+
+  addCard(card: Card) {
+    this.cards.push(card);
+    this.cardsChanged.next(this.cards.slice());
+    this.cardsService.create(card).subscribe();
+  }
 }

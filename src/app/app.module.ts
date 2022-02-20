@@ -10,6 +10,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BoardDndListComponent } from './components/board-dnd-list/board-dnd-list.component';
 import { HttpTokenInterceptor } from './interceptors/http.token.interceptor';
+import { AddCardComponent } from './components/add-card/add-card.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,8 +20,15 @@ import { HttpTokenInterceptor } from './interceptors/http.token.interceptor';
     BoardListComponent,
     HeaderComponent,
     BoardDndListComponent,
+    AddCardComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, DragDropModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    DragDropModule,
+    FormsModule,
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
   ],
