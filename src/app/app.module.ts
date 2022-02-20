@@ -7,8 +7,9 @@ import { AppComponent } from './app.component';
 import { BoardComponent } from './pages/board/board.component';
 import { BoardListComponent } from './pages/board-list/board-list.component';
 import { HeaderComponent } from './components/header/header.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BoardDndListComponent } from './components/board-dnd-list/board-dnd-list.component';
+import { HttpTokenInterceptor } from './interceptors/http.token.interceptor';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,9 @@ import { BoardDndListComponent } from './components/board-dnd-list/board-dnd-lis
     BoardDndListComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, DragDropModule],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

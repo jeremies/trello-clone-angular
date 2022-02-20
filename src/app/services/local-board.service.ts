@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { Board } from '../models/board.model';
 import { Card } from '../models/card.model';
 import { List } from '../models/list.model';
+import { CardsService } from './cards.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class LocalBoardService {
   private lists: List[] = [];
   private cards: Card[] = [];
 
-  constructor() {}
+  constructor(private cardsService: CardsService) {}
 
   setBoard(board: Board) {
     this.board = board;
@@ -44,5 +45,6 @@ export class LocalBoardService {
     const index = this.cards.findIndex((card) => card.id === newCard.id);
     this.cards[index] = { ...newCard };
     this.cardsChanged.next(this.cards.slice());
+    this.cardsService.update(newCard).subscribe();
   }
 }
