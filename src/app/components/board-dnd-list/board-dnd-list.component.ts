@@ -59,7 +59,9 @@ export class BoardDndListComponent implements OnInit, OnDestroy {
       }
     } else {
       newCard.idList = event.container.id;
-      if (this.cards.length === event.currentIndex) {
+      if (this.cards.length === 0) {
+        newCard.pos = Constants.incrementPositionCards;
+      } else if (this.cards.length === event.currentIndex) {
         newCard.pos =
           this.cards[this.cards.length - 1].pos +
           Constants.incrementPositionCards;
