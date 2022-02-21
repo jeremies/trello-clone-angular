@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Constants } from 'src/app/constants';
-import { LocalBoardService } from 'src/app/services/local-board.service';
+import { LocalCardsService } from 'src/app/services/local-cards.service';
 
 @Component({
   selector: 'app-add-card',
@@ -12,7 +12,7 @@ export class AddCardComponent implements OnInit {
   showCardInput: boolean = false;
   cardName: string = '';
 
-  constructor(private localBoardService: LocalBoardService) {}
+  constructor(private localCardsService: LocalCardsService) {}
 
   ngOnInit(): void {}
 
@@ -26,11 +26,11 @@ export class AddCardComponent implements OnInit {
   }
 
   addCard() {
-    const currentCards = this.localBoardService.getListCards(this.idList);
+    const currentCards = this.localCardsService.getListCards(this.idList);
     const pos =
       currentCards[currentCards.length - 1].pos +
       Constants.incrementPositionCards;
-    this.localBoardService.addCard({
+    this.localCardsService.addCard({
       id: '0',
       name: this.cardName,
       pos,

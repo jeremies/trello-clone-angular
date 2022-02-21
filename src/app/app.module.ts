@@ -12,6 +12,7 @@ import { BoardDndListComponent } from './components/board-dnd-list/board-dnd-lis
 import { HttpTokenInterceptor } from './interceptors/http.token.interceptor';
 import { AddCardComponent } from './components/add-card/add-card.component';
 import { FormsModule } from '@angular/forms';
+import { AddListComponent } from './components/add-list/add-list.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FormsModule } from '@angular/forms';
     HeaderComponent,
     BoardDndListComponent,
     AddCardComponent,
+    AddListComponent,
   ],
   imports: [
     BrowserModule,

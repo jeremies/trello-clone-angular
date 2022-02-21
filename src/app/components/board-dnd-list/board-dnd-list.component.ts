@@ -1,10 +1,10 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Constants } from 'src/app/constants';
 import { Card } from 'src/app/models/card.model';
 import { List } from 'src/app/models/list.model';
-import { LocalBoardService } from 'src/app/services/local-board.service';
+import { LocalCardsService } from 'src/app/services/local-cards.service';
 
 @Component({
   selector: 'app-board-dnd-list',
@@ -18,16 +18,16 @@ export class BoardDndListComponent implements OnInit, OnDestroy {
   cards: Card[] = [];
   subscription!: Subscription;
 
-  constructor(private localBoardService: LocalBoardService) {}
+  constructor(private localCardsService: LocalCardsService) {}
 
   ngOnInit(): void {
-    this.subscription = this.localBoardService.cardsChanged.subscribe(
+    this.subscription = this.localCardsService.cardsChanged.subscribe(
       (cards: Card[]) => {
-        this.cards = this.localBoardService.getListCards(this.list.id);
+        this.cards = this.localCardsService.getListCards(this.list.id);
       }
     );
 
-    this.cards = this.localBoardService.getListCards(this.list.id);
+    this.cards = this.localCardsService.getListCards(this.list.id);
   }
 
   ngOnDestroy() {
@@ -74,6 +74,6 @@ export class BoardDndListComponent implements OnInit, OnDestroy {
           2;
       }
     }
-    this.localBoardService.updateCard(newCard);
+    this.localCardsService.updateCard(newCard);
   }
 }

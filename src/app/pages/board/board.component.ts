@@ -1,27 +1,31 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Constants } from 'src/app/constants';
 import { Board } from 'src/app/models/board.model';
 import { List } from 'src/app/models/list.model';
 import { CardsService } from 'src/app/services/cards.service';
 import { ListsService } from 'src/app/services/lists.service';
-import { LocalBoardService } from 'src/app/services/local-board.service';
+import { LocalCardsService } from 'src/app/services/local-cards.service';
+import { LocalListsService } from 'src/app/services/local-lists.service';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
   board!: Board;
   lists: List[] = [];
+  subscription!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private listsService: ListsService,
     private cardsService: CardsService,
-    private localBoardService: LocalBoardService
+    private localCardsService: LocalCardsService,
+    private localListsService: LocalListsService
   ) {}
 
   ngOnInit(): void {
@@ -31,18 +35,30 @@ export class BoardComponent implements OnInit {
       this.populateLists();
       this.populateCards();
     });
+
+    this.subscription = this.localListsService.listsChanged.subscribe(
+      (lists: List[]) => {
+        this.lists = this.localListsService.getLists();
+      }
+    );
+
+    this.lists = this.localListsService.getLists();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   populateLists() {
     this.listsService
       .getAll(this.board.id)
-      .subscribe((lists) => (this.lists = lists));
+      .subscribe((lists) => this.localListsService.setLists(lists));
   }
 
   populateCards() {
     this.cardsService
       .getAll(this.board.id)
-      .subscribe((cards) => this.localBoardService.setCards(cards));
+      .subscribe((cards) => this.localCardsService.setCards(cards));
   }
 
   drop(event: CdkDragDrop<List[]>) {
@@ -69,8 +85,6 @@ export class BoardComponent implements OnInit {
         2;
     }
 
-    this.lists[event.previousIndex] = { ...newList };
-    moveItemInArray(this.lists, event.previousIndex, event.currentIndex);
-    this.listsService.update(newList).subscribe();
+    this.localListsService.updateList(newList);
   }
 }

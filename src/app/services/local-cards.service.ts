@@ -1,34 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { Board } from '../models/board.model';
 import { Card } from '../models/card.model';
-import { List } from '../models/list.model';
 import { CardsService } from './cards.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LocalBoardService {
+export class LocalCardsService {
   cardsChanged = new Subject<Card[]>();
 
-  private board!: Board;
-  private lists: List[] = [];
   private cards: Card[] = [];
 
   constructor(private cardsService: CardsService) {}
 
-  setBoard(board: Board) {
-    this.board = board;
-  }
-
   setCards(cards: Card[]) {
     this.cards = cards;
     this.cardsChanged.next(this.cards.slice());
-  }
-
-  setLists(lists: List[]) {
-    this.lists = lists;
   }
 
   getCards() {
