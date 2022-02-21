@@ -19,4 +19,8 @@ export class ListsService {
       })
     );
   }
+
+  update(list: List): Observable<List> {
+    return this.apiService.put(`/lists/${list.id}`, list);
+  }
 }

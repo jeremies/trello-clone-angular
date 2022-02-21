@@ -1,8 +1,16 @@
 <p>board works! {{ board.name }}</p>
 
-<div class="flex" cdkDropListGroup>
-  <app-board-dnd-list
-    *ngFor="let list of lists"
-    [list]="list"
-  ></app-board-dnd-list>
+<div
+  cdkDropList
+  cdkDropListOrientation="horizontal"
+  (cdkDropListDropped)="drop($event)"
+>
+  <div class="flex" cdkDropListGroup>
+    <app-board-dnd-list
+      cdkDrag
+      [cdkDragData]="list"
+      *ngFor="let list of lists"
+      [list]="list"
+    ></app-board-dnd-list>
+  </div>
 </div>
