@@ -1,17 +1,20 @@
-<p>board works! {{ board.name }}</p>
+<div [style]="getStyle()" class="flex flex-col h-full">
+  <p>board works! {{ board.name }}</p>
 
-<div
-  cdkDropList
-  cdkDropListOrientation="horizontal"
-  (cdkDropListDropped)="drop($event)"
->
-  <div class="flex" cdkDropListGroup>
-    <app-board-dnd-list
-      cdkDrag
-      [cdkDragData]="list"
-      *ngFor="let list of lists"
-      [list]="list"
-    ></app-board-dnd-list>
-    <app-add-list [idBoard]="board.id"></app-add-list>
+  <div
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    (cdkDropListDropped)="drop($event)"
+    class="overflow-x-auto flex-grow"
+  >
+    <div class="flex" cdkDropListGroup>
+      <app-board-dnd-list
+        cdkDrag
+        [cdkDragData]="list"
+        *ngFor="let list of lists"
+        [list]="list"
+      ></app-board-dnd-list>
+      <app-add-list [idBoard]="board.id"></app-add-list>
+    </div>
   </div>
 </div>

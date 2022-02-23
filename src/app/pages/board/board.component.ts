@@ -9,6 +9,7 @@ import { CardsService } from 'src/app/services/cards.service';
 import { ListsService } from 'src/app/services/lists.service';
 import { LocalCardsService } from 'src/app/services/local-cards.service';
 import { LocalListsService } from 'src/app/services/local-lists.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-board',
@@ -25,7 +26,8 @@ export class BoardComponent implements OnInit, OnDestroy {
     private listsService: ListsService,
     private cardsService: CardsService,
     private localCardsService: LocalCardsService,
-    private localListsService: LocalListsService
+    private localListsService: LocalListsService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -86,5 +88,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
 
     this.localListsService.updateList(newList);
+  }
+
+  getStyle() {
+    const backgroundImage = this.board.prefs.backgroundImage;
+    const style = `background-image: url(${backgroundImage})`;
+    return this.sanitizer.bypassSecurityTrustStyle(style);
   }
 }

@@ -24,7 +24,7 @@ export class BoardsService {
     return this.apiService.get(
       `/boards/${id}`,
       new HttpParams({
-        fromObject: { fields: 'name' },
+        fromObject: { fields: 'name,prefs' },
       })
     );
   }
