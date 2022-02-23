@@ -39,6 +39,9 @@ export class LocalCardsService {
   addCard(card: Card) {
     this.cards.push(card);
     this.cardsChanged.next(this.cards.slice());
-    this.cardsService.create(card).subscribe();
+    this.cardsService.create(card).subscribe((newCard: Card) => {
+      card.id = newCard.id;
+      this.cardsChanged.next(this.cards.slice());
+    });
   }
 }
