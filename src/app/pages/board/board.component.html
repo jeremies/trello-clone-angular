@@ -12,6 +12,6 @@
       *ngFor="let list of lists"
       [list]="list"
     ></app-board-dnd-list>
-    <app-add-list></app-add-list>
+    <app-add-list [idBoard]="board.id"></app-add-list>
   </div>
 </div>

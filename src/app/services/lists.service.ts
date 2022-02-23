@@ -15,12 +15,16 @@ export class ListsService {
     return this.apiService.get(
       `/boards/${idBoard}/lists`,
       new HttpParams({
-        fromObject: { fields: 'name,pos' },
+        fromObject: { fields: 'name,pos,idBoard' },
       })
     );
   }
 
   update(list: List): Observable<List> {
     return this.apiService.put(`/lists/${list.id}`, list);
+  }
+
+  create(list: List): Observable<List> {
+    return this.apiService.post(`/lists`, list);
   }
 }

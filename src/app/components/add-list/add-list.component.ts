@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Constants } from 'src/app/constants';
+import { LocalListsService } from 'src/app/services/local-lists.service';
 
 @Component({
   selector: 'app-add-list',
@@ -6,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-list.component.scss'],
 })
 export class AddListComponent implements OnInit {
+  @Input() idBoard: string = '';
   showListInput: boolean = false;
   listName: string = '';
 
-  constructor() {}
+  constructor(private localListsService: LocalListsService) {}
 
   ngOnInit(): void {}
 
@@ -17,7 +20,19 @@ export class AddListComponent implements OnInit {
     this.showListInput = true;
   }
 
-  addList() {}
+  addList() {
+    const currentLists = this.localListsService.getLists();
+    const pos =
+      currentLists[currentLists.length - 1].pos +
+      Constants.incrementPositionCards;
+    this.localListsService.addList({
+      id: Constants.idNew,
+      idBoard: this.idBoard,
+      name: this.listName,
+      pos,
+    });
+    this.listName = '';
+  }
 
   closeListInput() {
     this.showListInput = false;

@@ -27,11 +27,12 @@ export class AddCardComponent implements OnInit {
 
   addCard() {
     const currentCards = this.localCardsService.getListCards(this.idList);
-    const pos =
-      currentCards[currentCards.length - 1].pos +
-      Constants.incrementPositionCards;
+    let pos = Constants.incrementPositionCards;
+    if (currentCards.length > 0) {
+      pos += currentCards[currentCards.length - 1].pos;
+    }
     this.localCardsService.addCard({
-      id: '0',
+      id: Constants.idNew,
       name: this.cardName,
       pos,
       idList: this.idList,
