@@ -1,6 +1,6 @@
 <button
   *ngIf="!showListInput"
-  class="hover:bg-gray-300 w-full text-left rounded-sm"
+  class="hover:bg-gray-300 w-60 text-left rounded-sm"
   (click)="openListInput()"
 >
   Add another list
@@ -9,7 +9,7 @@
 <div *ngIf="showListInput">
   <input
     placeholder="Enter list title..."
-    class="p-1 focus:outline-none pb-4 w-full"
+    class="p-1 focus:outline-none pb-4 w-60"
     [(ngModel)]="listName"
   />
   <div>
